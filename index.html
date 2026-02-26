@@ -1,0 +1,2602 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تطبيق الثقافة العربية للمتعلمين المتقدمين في أمريكا</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-1: #fff2d8;
+      --bg-2: #ffd3e0;
+      --ink: #1f2340;
+      --muted: #4d5d83;
+      --brand: #0e8f83;
+      --brand-2: #ff8a3d;
+      --brand-3: #4b63ff;
+      --panel: #fffdfc;
+      --line: #e6c7da;
+      --ok: #1f7a4f;
+      --bad: #b03a2e;
+      --radius: 20px;
+      --shadow: 0 14px 30px rgba(23, 42, 46, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Cairo", sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(14, 143, 131, 0.25), transparent 40%),
+        radial-gradient(circle at 85% 5%, rgba(255, 138, 61, 0.2), transparent 36%),
+        radial-gradient(circle at 60% 90%, rgba(75, 99, 255, 0.16), transparent 32%),
+        linear-gradient(145deg, var(--bg-1), var(--bg-2));
+      min-height: 100vh;
+    }
+
+    .moving-bar {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      border-top: 1px solid #3a4764;
+      border-bottom: 1px solid #3a4764;
+      background: linear-gradient(90deg, #101828, #16253f 50%, #1f2f4a);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 8px 0;
+    }
+
+    .moving-bar.theme-2 {
+      background: linear-gradient(90deg, #2a193f, #3a2560 50%, #4b2f76);
+      border-top-color: #5f4a88;
+      border-bottom-color: #5f4a88;
+      color: #ffffff;
+    }
+
+    .moving-bar.theme-3 {
+      background: linear-gradient(90deg, #0f2d2a, #15433f 50%, #1d5852);
+      border-top-color: #2d6a63;
+      border-bottom-color: #2d6a63;
+      color: #ffffff;
+    }
+
+    .moving-bar.theme-4 {
+      background: linear-gradient(90deg, #3b1a1f, #5a262d 50%, #6f2f38);
+      border-top-color: #7e444d;
+      border-bottom-color: #7e444d;
+      color: #ffffff;
+    }
+
+    .moving-track {
+      display: inline-block;
+      min-width: max-content;
+      padding-right: 100%;
+      animation: movingText 65s linear infinite;
+    }
+
+    @keyframes movingText {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+
+    .app {
+      max-width: 1200px;
+      margin: 24px auto;
+      border-radius: 28px;
+      border: 1px solid rgba(219, 202, 176, 0.8);
+      overflow: hidden;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 24px;
+      background:
+        linear-gradient(125deg, #ff8a3d 0%, #7b4dff 45%, #0e8f83 100%);
+      color: #eef8f6;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Amiri", serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.3rem);
+      line-height: 1.25;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .hero h1 a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    .school-name {
+      color: #ffd700;
+      transition: color 280ms ease;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      max-width: 75ch;
+      color: #dcefea;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .meta {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .main-categories {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      --cat-bg-1: linear-gradient(120deg, #ffb86b, #ff8f66);
+      --cat-bg-2: linear-gradient(120deg, #7ee0ff, #5aa8ff);
+      --cat-bg-3: linear-gradient(120deg, #a7f18f, #60d58f);
+      --cat-bg-4: linear-gradient(120deg, #f8a1ff, #c48cff);
+      --cat-bg-5: linear-gradient(120deg, #ffe16d, #ffba59);
+    }
+
+    .cat-chip {
+      background: var(--cat-bg-1);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #1d243f;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      line-height: 1.3;
+      cursor: pointer;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+    }
+
+    .cat-chip:nth-child(2) { background: var(--cat-bg-2); }
+    .cat-chip:nth-child(3) { background: var(--cat-bg-3); }
+    .cat-chip:nth-child(4) { background: var(--cat-bg-4); }
+    .cat-chip:nth-child(5) { background: var(--cat-bg-5); }
+    .cat-chip:nth-child(6) { background: var(--cat-bg-2); }
+
+    .cat-chip:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .cat-chip.active {
+      background: #ffffff;
+      color: #1d3266;
+      border-color: #ffffff;
+      box-shadow: 0 6px 16px rgba(22, 37, 77, 0.18);
+    }
+
+    .main-categories.palette-2 {
+      --cat-bg-1: linear-gradient(120deg, #ff7b9e, #ff5d7f);
+      --cat-bg-2: linear-gradient(120deg, #6be7cc, #27b39f);
+      --cat-bg-3: linear-gradient(120deg, #ffc56f, #ff9f45);
+      --cat-bg-4: linear-gradient(120deg, #9fa8ff, #7887ff);
+      --cat-bg-5: linear-gradient(120deg, #f7a9d3, #dd79b4);
+    }
+
+    .main-categories.palette-3 {
+      --cat-bg-1: linear-gradient(120deg, #6ad8ff, #4f9dff);
+      --cat-bg-2: linear-gradient(120deg, #ffd36f, #ffb347);
+      --cat-bg-3: linear-gradient(120deg, #88e889, #56c773);
+      --cat-bg-4: linear-gradient(120deg, #ffa6a6, #ff7f7f);
+      --cat-bg-5: linear-gradient(120deg, #cab2ff, #9d86ff);
+    }
+
+    .main-categories.palette-4 {
+      --cat-bg-1: linear-gradient(120deg, #8ef0ff, #57c6ff);
+      --cat-bg-2: linear-gradient(120deg, #ffcf8a, #ff9f74);
+      --cat-bg-3: linear-gradient(120deg, #c3f77e, #8ddf68);
+      --cat-bg-4: linear-gradient(120deg, #ffb5e8, #f38ccf);
+      --cat-bg-5: linear-gradient(120deg, #ffe88d, #ffc75c);
+    }
+
+    .cover-note {
+      margin-top: 10px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 12px;
+      padding: 10px 12px;
+      color: #f2f7ff;
+      font-weight: 700;
+      max-width: 760px;
+      line-height: 1.6;
+      position: relative;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+      cursor: default;
+    }
+
+    .cover-note:hover {
+      transform: translateY(-3px) scale(1.01);
+      background: rgba(255, 255, 255, 0.28);
+      box-shadow: 0 10px 20px rgba(20, 32, 66, 0.2);
+    }
+
+    .cover-note::after {
+      content: attr(data-popup);
+      position: absolute;
+      right: 50%;
+      transform: translateX(50%) translateY(6px);
+      bottom: calc(100% + 8px);
+      background: #111c33;
+      color: #f4f8ff;
+      border: 1px solid #334976;
+      border-radius: 10px;
+      padding: 6px 9px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 140ms ease, transform 140ms ease;
+      z-index: 20;
+    }
+
+    .cover-note:hover::after {
+      opacity: 1;
+      transform: translateX(50%) translateY(0);
+    }
+
+    .front-links {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      justify-content: center;
+      direction: ltr;
+    }
+
+    .front-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.18);
+      color: #f7fbff;
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 800;
+      transition: transform 120ms ease, background 120ms ease;
+    }
+
+    .front-link:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .front-footer {
+      margin: 0 18px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fffafc, #f7f9ff);
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      justify-content: center;
+      direction: ltr;
+    }
+
+    .front-footer a {
+      color: #1f45c8;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 800;
+      font-size: 0.86rem;
+    }
+
+    .front-footer[hidden] {
+      display: none !important;
+    }
+
+    .book-cover {
+      margin: 18px;
+      padding: 26px 20px;
+      border-radius: 18px;
+      border: 1px solid #d7c3a8;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255, 215, 145, 0.28), transparent 40%),
+        radial-gradient(circle at 88% 86%, rgba(120, 170, 255, 0.2), transparent 45%),
+        linear-gradient(145deg, #fffaf1, #f4efe3 45%, #ece9df);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65), 0 12px 28px rgba(28, 41, 73, 0.12);
+      text-align: center;
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+      cursor: pointer;
+    }
+
+    .book-cover:hover {
+      transform: translateY(-6px) scale(1.012);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75), 0 20px 34px rgba(22, 35, 70, 0.2);
+      filter: saturate(1.08);
+    }
+
+    .book-cover.alt-cover {
+      background:
+        radial-gradient(circle at 85% 12%, rgba(255, 190, 138, 0.26), transparent 42%),
+        radial-gradient(circle at 10% 88%, rgba(156, 206, 255, 0.2), transparent 45%),
+        linear-gradient(145deg, #f9f4e6, #eee8da 48%, #e6e2d6);
+    }
+
+    #bookCover {
+      background:
+        radial-gradient(circle at 16% 12%, rgba(126, 223, 255, 0.34), transparent 42%),
+        radial-gradient(circle at 88% 86%, rgba(105, 145, 255, 0.26), transparent 45%),
+        linear-gradient(145deg, #e8f7ff, #e7efff 46%, #edf1ff);
+    }
+
+    #bookCoverSecond {
+      background:
+        radial-gradient(circle at 84% 14%, rgba(125, 229, 195, 0.3), transparent 40%),
+        radial-gradient(circle at 12% 84%, rgba(99, 203, 166, 0.28), transparent 43%),
+        linear-gradient(145deg, #e8fff7, #e2fff0 44%, #e8fdf6);
+    }
+
+    #bookCoverThird {
+      background:
+        radial-gradient(circle at 14% 16%, rgba(255, 166, 213, 0.3), transparent 40%),
+        radial-gradient(circle at 86% 82%, rgba(233, 140, 255, 0.26), transparent 42%),
+        linear-gradient(145deg, #fff0fb, #ffe8f7 44%, #f8eaff);
+    }
+
+    #bookCoverFourth {
+      background:
+        radial-gradient(circle at 16% 14%, rgba(153, 198, 255, 0.28), transparent 40%),
+        radial-gradient(circle at 86% 80%, rgba(190, 168, 255, 0.24), transparent 44%),
+        linear-gradient(145deg, #eef3ff, #ece8ff 44%, #eaf8ff);
+    }
+
+    .cover-frame {
+      margin: 0 auto;
+      max-width: 900px;
+      border: 2px solid #c7b18c;
+      border-radius: 16px;
+      padding: 18px 16px;
+      background:
+        linear-gradient(160deg, rgba(255,255,255,0.66), rgba(247,241,229,0.88)),
+        repeating-linear-gradient(
+          45deg,
+          rgba(185, 162, 121, 0.12) 0 8px,
+          rgba(255, 255, 255, 0.08) 8px 16px
+        );
+    }
+
+    .cover-calligraphy {
+      margin: 0;
+      font-family: "Amiri", serif;
+      font-size: clamp(2.2rem, 6vw, 4.4rem);
+      line-height: 1.22;
+      color: #3d2d1f;
+      text-shadow: 0 1px 0 #fff4dc, 0 8px 18px rgba(61, 45, 31, 0.16);
+    }
+
+    #bookCover .cover-calligraphy { color: #4f2a29; }
+    #bookCoverSecond .cover-calligraphy { color: #1c4b40; }
+    #bookCoverThird .cover-calligraphy { color: #66315f; }
+    #bookCoverFourth .cover-calligraphy { color: #3b3f7d; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 8px 18px rgba(40, 56, 108, 0.2); }
+
+    .cover-subtitle {
+      margin: 10px 0 0;
+      font-size: 1rem;
+      color: #4a5673;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    #bookCover .cover-subtitle { color: #3d4f71; }
+    #bookCoverSecond .cover-subtitle { color: #245b50; }
+    #bookCoverThird .cover-subtitle { color: #5f3f6d; }
+    #bookCoverFourth .cover-subtitle { color: #4c5d87; }
+
+    .cover-ornament {
+      margin: 12px auto 0;
+      width: min(460px, 88%);
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #a07b45, #e5c68a 45%, #7f5b2f);
+      opacity: 0.75;
+    }
+
+    #bookCover .cover-ornament {
+      background: linear-gradient(90deg, #b3682f, #ffd27f 45%, #8a4f22);
+    }
+
+    #bookCoverSecond .cover-ornament {
+      background: linear-gradient(90deg, #2a8c79, #99f3da 45%, #1f6458);
+    }
+
+    #bookCoverThird .cover-ornament {
+      background: linear-gradient(90deg, #a05cae, #f1a9ff 45%, #6c3f78);
+    }
+
+    #bookCoverFourth .cover-ornament {
+      background: linear-gradient(90deg, #6f8de5, #c8d8ff 45%, #5b76cc);
+    }
+
+    #bookCover .cover-frame {
+      border-color: #9ab5d9;
+      background: linear-gradient(160deg, rgba(255,255,255,0.72), rgba(230, 241, 255, 0.9));
+    }
+
+    #bookCoverSecond .cover-frame {
+      border-color: #8ecab9;
+      background: linear-gradient(160deg, rgba(255,255,255,0.72), rgba(224, 255, 243, 0.9));
+    }
+
+    #bookCoverThird .cover-frame {
+      border-color: #d29acb;
+      background: linear-gradient(160deg, rgba(255,255,255,0.72), rgba(255, 232, 247, 0.9));
+    }
+
+    #bookCoverFourth .cover-frame {
+      border-color: #a5b7e4;
+      background: linear-gradient(160deg, rgba(255,255,255,0.72), rgba(236, 241, 255, 0.9));
+    }
+
+    .book-cover[hidden] {
+      display: none !important;
+    }
+
+    #contentShell[hidden] {
+      display: none !important;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      position: relative;
+      cursor: default;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    }
+
+    .pill:hover {
+      transform: translateY(-3px) scale(1.04);
+      background: rgba(255, 255, 255, 0.28);
+      box-shadow: 0 10px 20px rgba(20, 32, 66, 0.2);
+    }
+
+    .pill::after {
+      content: attr(data-popup);
+      position: absolute;
+      right: 50%;
+      transform: translateX(50%) translateY(6px);
+      bottom: calc(100% + 8px);
+      background: #111c33;
+      color: #f4f8ff;
+      border: 1px solid #334976;
+      border-radius: 10px;
+      padding: 6px 9px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 140ms ease, transform 140ms ease;
+      z-index: 20;
+    }
+
+    .pill:hover::after {
+      opacity: 1;
+      transform: translateX(50%) translateY(0);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 740px;
+    }
+
+    aside {
+      border-left: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, #fff7fb 0%, #eef5ff 45%, #fff6ea 100%);
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .aside-title {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #153f38;
+      font-weight: 800;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn,
+    .topic-btn,
+    .action-btn {
+      font-family: inherit;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+    }
+
+    .filter-btn {
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(120deg, #e6fff8, #e6ecff);
+      border-color: #9eb8ff;
+      color: #1f2e73;
+    }
+
+    .topics {
+      display: grid;
+      gap: 8px;
+      max-height: 530px;
+      overflow: auto;
+      padding-left: 6px;
+    }
+
+    .topic-btn {
+      width: 100%;
+      text-align: right;
+      padding: 11px;
+      line-height: 1.35;
+      font-size: 0.92rem;
+      font-weight: 700;
+      border-right: 4px solid transparent;
+    }
+
+    .topic-btn small {
+      display: block;
+      font-size: 0.78rem;
+      color: #587072;
+      font-weight: 600;
+    }
+
+    .topic-btn:hover,
+    .filter-btn:hover,
+    .action-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(23, 42, 46, 0.08);
+    }
+
+    .topic-btn.active {
+      border-right-color: #6a5cff;
+      background: linear-gradient(110deg, #f3fff8, #f2efff);
+    }
+
+    .progress-wrap {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .progress-label {
+      font-size: 0.83rem;
+      color: #476063;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .progress-bar {
+      margin-top: 8px;
+      height: 9px;
+      border-radius: 999px;
+      background: #ece3d3;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--brand), var(--brand-3), var(--brand-2));
+      transition: width 240ms ease;
+    }
+
+    main {
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .card {
+      background: linear-gradient(170deg, #ffffff, #fff9ff 45%, #fffaf1);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    .title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: "Amiri", serif;
+      font-size: clamp(1.4rem, 2.3vw, 2rem);
+      line-height: 1.3;
+      color: #183f39;
+    }
+
+    .level-tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      background: linear-gradient(120deg, #e6fff7, #e9edff);
+      color: #1f2f77;
+      border: 1px solid #b9c8ff;
+    }
+
+    .paragraph {
+      margin: 12px 0 0;
+      line-height: 1.95;
+      color: #1e363a;
+      font-size: 1.05rem;
+    }
+
+    .video-link {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #1e3fd3;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(30, 63, 211, 0.3);
+    }
+
+    .video-link:hover {
+      border-bottom-color: rgba(30, 63, 211, 0.7);
+    }
+
+    .source-link {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #b14a1e;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(177, 74, 30, 0.35);
+    }
+
+    .source-link:hover {
+      border-bottom-color: rgba(177, 74, 30, 0.7);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .vocab-box {
+      margin-top: 14px;
+      border: 1px solid #e6d8c5;
+      border-radius: 14px;
+      background: linear-gradient(150deg, #fff6df, #ffeaf4 55%, #eef3ff);
+      padding: 10px 12px;
+    }
+
+    .vocab-title {
+      margin: 0 0 6px;
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: #6e3f1e;
+    }
+
+    .vocab-list {
+      margin: 0;
+      padding-right: 18px;
+      color: #2a4246;
+      line-height: 1.7;
+      font-size: 0.94rem;
+    }
+
+    .action-btn {
+      padding: 9px 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .action-btn.primary {
+      background: linear-gradient(120deg, #dffcf3, #dfe7ff);
+      border-color: #a8beff;
+      color: #213781;
+    }
+
+    .action-btn.secondary {
+      background: linear-gradient(120deg, #fff1df, #ffe1f1);
+      border-color: #f4b3d8;
+      color: #8d245c;
+    }
+
+    .quiz-title {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #163c36;
+    }
+
+    .choice {
+      display: block;
+      margin-top: 8px;
+      padding: 10px;
+      border: 1px solid #e4c3dd;
+      border-radius: 12px;
+      background: linear-gradient(130deg, #fffdfa, #f8f2ff);
+      cursor: pointer;
+      line-height: 1.6;
+    }
+
+    .choice input {
+      margin-left: 8px;
+      accent-color: #175f54;
+    }
+
+    .result {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 12px;
+      display: none;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .result.ok {
+      display: block;
+      color: #0f5d3a;
+      background: #e8f8ef;
+      border: 1px solid #b6e4c9;
+    }
+
+    .result.bad {
+      display: block;
+      color: #8f2f24;
+      background: #fdecea;
+      border: 1px solid #f3bcb5;
+    }
+
+    .status {
+      font-size: 0.92rem;
+      color: #4a6467;
+    }
+
+    .signature {
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding: 14px 18px 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      align-items: center;
+      justify-content: center;
+      direction: ltr;
+      color: #2a335b;
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: linear-gradient(180deg, #fffafc, #f7f9ff);
+    }
+
+    .signature a {
+      color: #1f45c8;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 800;
+    }
+
+    .videos-strip {
+      margin: 16px 18px 0;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fffdfa, #f5f8ff);
+      padding: 12px;
+    }
+
+    .videos-title {
+      margin: 0 0 10px;
+      color: #1e315f;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .video-card {
+      border: 1px solid #d8c8df;
+      border-radius: 12px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .video-link-card {
+      display: block;
+      padding: 14px 12px;
+      color: #1f45c8;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-align: center;
+      background: linear-gradient(145deg, #f8f3ff, #eef4ff);
+      transition: transform 140ms ease, background 140ms ease;
+    }
+
+    .video-link-card:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(145deg, #f0e9ff, #e6efff);
+    }
+
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      animation: riseIn 280ms ease;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+        order: 2;
+      }
+
+      main {
+        order: 1;
+      }
+
+      .topics {
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="moving-bar" aria-label="شريط متحرك علوي">
+    <div id="topInfoTrack" class="moving-track">معلومات الموضوعات جارٍ التحميل...</div>
+  </div>
+
+  <div class="app">
+    <header class="hero">
+      <h1 id="appHeader" title="اضغط لتحديث الصفحة">الثقافة العربية (<span id="schoolName" class="school-name">Middlebury Arabic School</span>)</h1>
+      <p id="heroDescription">
+        تطبيق تفاعلي عالمي بمحتوى تجريدي متقدم: اختر موضوعًا كونيًا، اقرأ نصًا تحليليًا مطوّلًا، ثم أجب عن سؤال نقدي.
+      </p>
+      <div id="mainCategories" class="main-categories" aria-label="الفئات الرئيسية للموضوعات"></div>
+      <p id="coverNote" class="cover-note" data-popup="اضغط على أي فئة للانتقال مباشرة إلى موضوعاتها">اختاروا أي فئة من الفئات أعلاه لبدء التعلّم والدخول إلى موضوعاتها</p>
+      <div class="meta">
+        <span id="topicsCount" class="pill" data-popup="إجمالي عدد الدروس المتاحة">عدد الموضوعات: 0</span>
+        <span class="pill" data-popup="مزيج تعلم ثقافي وتواصلي">التركيز: الثقافة + التواصل</span>
+        <span class="pill" data-popup="الفئة المستهدفة في هذا البرنامج">الفئة: طلاب العربية كلغة أجنبية في أمريكا</span>
+      </div>
+    </header>
+
+    <section id="bookCoverFourth" class="book-cover" aria-label="غلاف إضافي رابع">
+      <div class="cover-frame">
+        <h2 id="coverTitleFourth" class="cover-calligraphy">موسوعة الثقافة العربية التفاعلية</h2>
+        <p class="cover-subtitle">ادخل عبر الفئات الرئيسية، واكتشف 60 موضوعًا متدرّجًا<br>مع مفردات واختبارات وروابط أصيلة</p>
+        <div class="cover-ornament" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section id="bookCover" class="book-cover" aria-label="غلاف الكتاب">
+      <div class="cover-frame">
+        <h2 id="coverTitleMain" class="cover-calligraphy">الثقافة العربية</h2>
+        <p class="cover-subtitle">مقرّر تفاعلي لطلاب العربية كلغة أجنبية في الولايات المتحدة<br>اختر فئة من الأعلى للدخول إلى موضوعاتها مباشرة</p>
+        <div class="cover-ornament" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section id="bookCoverSecond" class="book-cover alt-cover" aria-label="غلاف إضافي">
+      <div class="cover-frame">
+        <h2 id="coverTitleSecond" class="cover-calligraphy">رحلة في اللغة والثقافة</h2>
+        <p class="cover-subtitle">موضوعات أصيلة، مفردات دقيقة، وأنشطة تفاعلية<br>ابدأ من الفئة التي تناسب مستواك</p>
+        <div class="cover-ornament" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section id="bookCoverThird" class="book-cover" aria-label="غلاف إضافي ثالث">
+      <div class="cover-frame">
+        <h2 id="coverTitleThird" class="cover-calligraphy">دفتر الثقافة العربية</h2>
+        <p class="cover-subtitle">من الفلسفة المعاصرة إلى النظام الدولي والهوية الرقمية<br>تعلّم تحليلي عالمي خطوة بخطوة</p>
+        <div class="cover-ornament" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <footer id="frontFooter" class="front-footer" aria-label="روابط الغلاف">
+      <a href="https://www.udemy.com/user/mohamed-ansary-4/" target="_blank" rel="noopener noreferrer">Mohamed Ansary</a>
+      <a href="https://www.youtube.com/@arabicasaforeignlanguage6154" target="_blank" rel="noopener noreferrer">AFL</a>
+      <a href="https://www.facebook.com/mohamedansary1972" target="_blank" rel="noopener noreferrer">Facebook Page</a>
+      <a href="https://www.youtube.com/@MohamedAnsary" target="_blank" rel="noopener noreferrer">YouTube Channel</a>
+      <a href="https://mohamedansary.myteachify.com/courses/researchpapers" target="_blank" rel="noopener noreferrer">Resources</a>
+    </footer>
+
+    <div id="contentShell">
+    <div class="layout">
+      <aside>
+        <h3 class="aside-title">اختر المستوى</h3>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">الكل</button>
+          <button class="filter-btn" data-filter="mid">متوسط-متقدم</button>
+          <button class="filter-btn" data-filter="high">ثانوي-متقدم</button>
+        </div>
+
+        <h3 class="aside-title">الموضوعات الثقافية</h3>
+        <div id="topicsList" class="topics" aria-label="قائمة الموضوعات"></div>
+
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>التقدّم</span>
+            <span id="progressText">0 / 12</span>
+          </div>
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+          <p id="scoreText" class="status">النتيجة: 0 من 0</p>
+        </div>
+      </aside>
+
+      <main>
+        <section class="card">
+          <div class="title-row">
+            <h2 id="topicTitle"></h2>
+            <span id="levelTag" class="level-tag"></span>
+          </div>
+          <p id="topicParagraph" class="paragraph"></p>
+          <a id="videoLink" class="video-link" href="#" target="_blank" rel="noopener noreferrer">فيديو مقترح عن الموضوع</a>
+          <a id="sourceLink" class="source-link" href="#" target="_blank" rel="noopener noreferrer">المصدر العربي</a>
+          <div class="vocab-box">
+            <p class="vocab-title">مفردات صعبة (English Gloss)</p>
+            <ul id="vocabList" class="vocab-list"></ul>
+          </div>
+          <div class="actions">
+            <button id="prevBtn" class="action-btn">الموضوع السابق</button>
+            <button id="nextBtn" class="action-btn">الموضوع التالي</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <p class="quiz-title">اختبار سريع</p>
+          <p id="quizQuestion" class="paragraph" style="margin-top:0"></p>
+          <form id="quizForm"></form>
+          <div class="actions">
+            <button id="checkBtn" class="action-btn secondary" type="button">تحقق من الإجابة</button>
+          </div>
+          <div id="resultBox" class="result"></div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="signature" aria-label="توقيع">
+      <a href="https://www.udemy.com/user/mohamed-ansary-4/" target="_blank" rel="noopener noreferrer">Mohamed Ansary</a>
+      <a href="https://www.facebook.com/mohamedansary1972" target="_blank" rel="noopener noreferrer">Facebook Page</a>
+      <a href="https://mohamedansary.myteachify.com/courses/researchpapers" target="_blank" rel="noopener noreferrer">Resources</a>
+      <a href="https://www.youtube.com/@arabicasaforeignlanguage6154" target="_blank" rel="noopener noreferrer">AFL</a>
+      <a href="https://www.youtube.com/@MohamedAnsary" target="_blank" rel="noopener noreferrer">YouTube Channel</a>
+    </footer>
+    </div>
+  </div>
+
+  <div class="moving-bar" aria-label="شريط متحرك سفلي">
+    <div id="bottomInfoTrack" class="moving-track">معلومات الموضوعات جارٍ التحميل...</div>
+  </div>
+
+  <script>
+    const topics = [
+      {
+        id: 1,
+        level: "mid",
+        title: "مفارقة الحرية والضرورة في الذات المعاصرة",
+        paragraph: "في مستوى التحليل النقدي المعمّق، يظهر أن «مفارقة الحرية والضرورة في الذات المعاصرة» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D9%85%D9%81%D8%A7%D8%B1%D9%82%D8%A9%20%D8%A7%D9%84%D8%AD%D8%B1%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D8%B6%D8%B1%D9%88%D8%B1%D8%A9%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%B0%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%B5%D8%B1%D8%A9",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: مفارقة الحرية والضرورة في الذات المعاصرة في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 2,
+        level: "mid",
+        title: "العدالة بين المعيارية والواقعية السياسية",
+        paragraph: "من منظور إبستيمي-تداولي، يمكن الدفاع عن أطروحة مفادها أن «العدالة بين المعيارية والواقعية السياسية» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%B9%D8%AF%D8%A7%D9%84%D8%A9%20%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D9%85%D8%B9%D9%8A%D8%A7%D8%B1%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D9%88%D8%A7%D9%82%D8%B9%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%B3%D9%8A%D8%A9",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: العدالة بين المعيارية والواقعية السياسية في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 3,
+        level: "mid",
+        title: "تأويل الحقيقة في زمن ما بعد اليقين",
+        paragraph: "تكشف المقارنة بين الأطر النظرية أن «تأويل الحقيقة في زمن ما بعد اليقين» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%AA%D8%A3%D9%88%D9%8A%D9%84%20%D8%A7%D9%84%D8%AD%D9%82%D9%8A%D9%82%D8%A9%20%D9%81%D9%8A%20%D8%B2%D9%85%D9%86%20%D9%85%D8%A7%20%D8%A8%D8%B9%D8%AF%20%D8%A7%D9%84%D9%8A%D9%82%D9%8A%D9%86",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: تأويل الحقيقة في زمن ما بعد اليقين في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 4,
+        level: "mid",
+        title: "الوعي الأخلاقي وحدود النفعية الاجتماعية",
+        paragraph: "لا يستقيم النظر في هذا المحور إلا بالقول إن «الوعي الأخلاقي وحدود النفعية الاجتماعية» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%88%D8%B9%D9%8A%20%D8%A7%D9%84%D8%A3%D8%AE%D9%84%D8%A7%D9%82%D9%8A%20%D9%88%D8%AD%D8%AF%D9%88%D8%AF%20%D8%A7%D9%84%D9%86%D9%81%D8%B9%D9%8A%D8%A9%20%D8%A7%D9%84%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%D9%8A%D8%A9",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: الوعي الأخلاقي وحدود النفعية الاجتماعية في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 5,
+        level: "mid",
+        title: "زمنية الإنسان بين الذاكرة والتوقع",
+        paragraph: "تدلّ المؤشرات الخطابية والمؤسسية على أن «زمنية الإنسان بين الذاكرة والتوقع» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%B2%D9%85%D9%86%D9%8A%D8%A9%20%D8%A7%D9%84%D8%A5%D9%86%D8%B3%D8%A7%D9%86%20%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D8%B0%D8%A7%D9%83%D8%B1%D8%A9%20%D9%88%D8%A7%D9%84%D8%AA%D9%88%D9%82%D8%B9",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: زمنية الإنسان بين الذاكرة والتوقع في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 6,
+        level: "mid",
+        title: "الكرامة الإنسانية في النقاشات الكونية",
+        paragraph: "عند فحص البنية الحجاجية للموضوع، يتأكد أن «الكرامة الإنسانية في النقاشات الكونية» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%83%D8%B1%D8%A7%D9%85%D8%A9%20%D8%A7%D9%84%D8%A5%D9%86%D8%B3%D8%A7%D9%86%D9%8A%D8%A9%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%86%D9%82%D8%A7%D8%B4%D8%A7%D8%AA%20%D8%A7%D9%84%D9%83%D9%88%D9%86%D9%8A%D8%A9",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: الكرامة الإنسانية في النقاشات الكونية في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 7,
+        level: "mid",
+        title: "الاغتراب الرمزي في المجتمعات الشبكية",
+        paragraph: "ضمن سياق عالمي متحوّل، يبرز أن «الاغتراب الرمزي في المجتمعات الشبكية» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%A7%D8%BA%D8%AA%D8%B1%D8%A7%D8%A8%20%D8%A7%D9%84%D8%B1%D9%85%D8%B2%D9%8A%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%85%D8%AC%D8%AA%D9%85%D8%B9%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B4%D8%A8%D9%83%D9%8A%D8%A9",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: الاغتراب الرمزي في المجتمعات الشبكية في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 8,
+        level: "mid",
+        title: "التعدد القيمي وإدارة الاختلاف الحضاري",
+        paragraph: "تضعنا هذه القضية أمام سؤال تأسيسي يقول إن «التعدد القيمي وإدارة الاختلاف الحضاري» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%AA%D8%B9%D8%AF%D8%AF%20%D8%A7%D9%84%D9%82%D9%8A%D9%85%D9%8A%20%D9%88%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D8%A7%D8%AE%D8%AA%D9%84%D8%A7%D9%81%20%D8%A7%D9%84%D8%AD%D8%B6%D8%A7%D8%B1%D9%8A",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: التعدد القيمي وإدارة الاختلاف الحضاري في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 9,
+        level: "mid",
+        title: "المعنى والعمل في فلسفة المسؤولية",
+        paragraph: "من زاوية فلسفة الفعل الاجتماعي، يتضح أن «المعنى والعمل في فلسفة المسؤولية» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%85%D8%B9%D9%86%D9%89%20%D9%88%D8%A7%D9%84%D8%B9%D9%85%D9%84%20%D9%81%D9%8A%20%D9%81%D9%84%D8%B3%D9%81%D8%A9%20%D8%A7%D9%84%D9%85%D8%B3%D8%A4%D9%88%D9%84%D9%8A%D8%A9",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: المعنى والعمل في فلسفة المسؤولية في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 10,
+        level: "mid",
+        title: "حدود العقل الأداتي في العالم المعولم",
+        paragraph: "تبيّن القراءة التركيبية لهذا الملف أن «حدود العقل الأداتي في العالم المعولم» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%AD%D8%AF%D9%88%D8%AF%20%D8%A7%D9%84%D8%B9%D9%82%D9%84%20%D8%A7%D9%84%D8%A3%D8%AF%D8%A7%D8%AA%D9%8A%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%20%D8%A7%D9%84%D9%85%D8%B9%D9%88%D9%84%D9%85",
+        source: "https://www.unesco.org/ar",
+        sourceTitle: "المصدر العربي: اليونسكو (فكر وثقافة عالمية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: حدود العقل الأداتي في العالم المعولم في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 11,
+        level: "mid",
+        title: "إعادة توزيع القوة في النظام متعدد الأقطاب",
+        paragraph: "في مستوى التحليل النقدي المعمّق، يظهر أن «إعادة توزيع القوة في النظام متعدد الأقطاب» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A5%D8%B9%D8%A7%D8%AF%D8%A9%20%D8%AA%D9%88%D8%B2%D9%8A%D8%B9%20%D8%A7%D9%84%D9%82%D9%88%D8%A9%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%86%D8%B8%D8%A7%D9%85%20%D9%85%D8%AA%D8%B9%D8%AF%D8%AF%20%D8%A7%D9%84%D8%A3%D9%82%D8%B7%D8%A7%D8%A8",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: إعادة توزيع القوة في النظام متعدد الأقطاب في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 12,
+        level: "mid",
+        title: "السيادة الوطنية تحت ضغط الاعتماد المتبادل",
+        paragraph: "من منظور إبستيمي-تداولي، يمكن الدفاع عن أطروحة مفادها أن «السيادة الوطنية تحت ضغط الاعتماد المتبادل» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%AF%D8%A9%20%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A%D8%A9%20%D8%AA%D8%AD%D8%AA%20%D8%B6%D8%BA%D8%B7%20%D8%A7%D9%84%D8%A7%D8%B9%D8%AA%D9%85%D8%A7%D8%AF%20%D8%A7%D9%84%D9%85%D8%AA%D8%A8%D8%A7%D8%AF%D9%84",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: السيادة الوطنية تحت ضغط الاعتماد المتبادل في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 13,
+        level: "mid",
+        title: "سياسات الردع والتحول في الأمن الجماعي",
+        paragraph: "تكشف المقارنة بين الأطر النظرية أن «سياسات الردع والتحول في الأمن الجماعي» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%B3%D9%8A%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B1%D8%AF%D8%B9%20%D9%88%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A3%D9%85%D9%86%20%D8%A7%D9%84%D8%AC%D9%85%D8%A7%D8%B9%D9%8A",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: سياسات الردع والتحول في الأمن الجماعي في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 14,
+        level: "mid",
+        title: "الجنوب العالمي وخطابات العدالة الدولية",
+        paragraph: "لا يستقيم النظر في هذا المحور إلا بالقول إن «الجنوب العالمي وخطابات العدالة الدولية» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%AC%D9%86%D9%88%D8%A8%20%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%D9%8A%20%D9%88%D8%AE%D8%B7%D8%A7%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D8%AF%D8%A7%D9%84%D8%A9%20%D8%A7%D9%84%D8%AF%D9%88%D9%84%D9%8A%D8%A9",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: الجنوب العالمي وخطابات العدالة الدولية في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 15,
+        level: "mid",
+        title: "الأمن الغذائي كسؤال جيوسياسي",
+        paragraph: "تدلّ المؤشرات الخطابية والمؤسسية على أن «الأمن الغذائي كسؤال جيوسياسي» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%A3%D9%85%D9%86%20%D8%A7%D9%84%D8%BA%D8%B0%D8%A7%D8%A6%D9%8A%20%D9%83%D8%B3%D8%A4%D8%A7%D9%84%20%D8%AC%D9%8A%D9%88%D8%B3%D9%8A%D8%A7%D8%B3%D9%8A",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: الأمن الغذائي كسؤال جيوسياسي في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 16,
+        level: "mid",
+        title: "دبلوماسية الطاقة بين الصراع والتعاون",
+        paragraph: "عند فحص البنية الحجاجية للموضوع، يتأكد أن «دبلوماسية الطاقة بين الصراع والتعاون» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%AF%D8%A8%D9%84%D9%88%D9%85%D8%A7%D8%B3%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9%20%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D8%B5%D8%B1%D8%A7%D8%B9%20%D9%88%D8%A7%D9%84%D8%AA%D8%B9%D8%A7%D9%88%D9%86",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: دبلوماسية الطاقة بين الصراع والتعاون في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 17,
+        level: "mid",
+        title: "الممرات البحرية وسلاسل الإمداد العالمية",
+        paragraph: "ضمن سياق عالمي متحوّل، يبرز أن «الممرات البحرية وسلاسل الإمداد العالمية» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%85%D9%85%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D8%AD%D8%B1%D9%8A%D8%A9%20%D9%88%D8%B3%D9%84%D8%A7%D8%B3%D9%84%20%D8%A7%D9%84%D8%A5%D9%85%D8%AF%D8%A7%D8%AF%20%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%D9%8A%D8%A9",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: الممرات البحرية وسلاسل الإمداد العالمية في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 18,
+        level: "mid",
+        title: "العقوبات الاقتصادية وأخلاقيات التأثير",
+        paragraph: "تضعنا هذه القضية أمام سؤال تأسيسي يقول إن «العقوبات الاقتصادية وأخلاقيات التأثير» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%B9%D9%82%D9%88%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A%D8%A9%20%D9%88%D8%A3%D8%AE%D9%84%D8%A7%D9%82%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AA%D8%A3%D8%AB%D9%8A%D8%B1",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: العقوبات الاقتصادية وأخلاقيات التأثير في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 19,
+        level: "mid",
+        title: "الهجرة القسرية وإعادة تعريف المواطنة",
+        paragraph: "من زاوية فلسفة الفعل الاجتماعي، يتضح أن «الهجرة القسرية وإعادة تعريف المواطنة» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%87%D8%AC%D8%B1%D8%A9%20%D8%A7%D9%84%D9%82%D8%B3%D8%B1%D9%8A%D8%A9%20%D9%88%D8%A5%D8%B9%D8%A7%D8%AF%D8%A9%20%D8%AA%D8%B9%D8%B1%D9%8A%D9%81%20%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%B7%D9%86%D8%A9",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: الهجرة القسرية وإعادة تعريف المواطنة في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 20,
+        level: "mid",
+        title: "مستقبل الحوكمة العالمية بعد الأزمات المركبة",
+        paragraph: "تبيّن القراءة التركيبية لهذا الملف أن «مستقبل الحوكمة العالمية بعد الأزمات المركبة» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84%20%D8%A7%D9%84%D8%AD%D9%88%D9%83%D9%85%D8%A9%20%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%D9%8A%D8%A9%20%D8%A8%D8%B9%D8%AF%20%D8%A7%D9%84%D8%A3%D8%B2%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9",
+        source: "https://www.un.org/ar",
+        sourceTitle: "المصدر العربي: الأمم المتحدة (قضايا دولية)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: مستقبل الحوكمة العالمية بعد الأزمات المركبة في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 21,
+        level: "mid",
+        title: "رأس المال المعرفي وقيمة الابتكار",
+        paragraph: "في مستوى التحليل النقدي المعمّق، يظهر أن «رأس المال المعرفي وقيمة الابتكار» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%B1%D8%A3%D8%B3%20%D8%A7%D9%84%D9%85%D8%A7%D9%84%20%D8%A7%D9%84%D9%85%D8%B9%D8%B1%D9%81%D9%8A%20%D9%88%D9%82%D9%8A%D9%85%D8%A9%20%D8%A7%D9%84%D8%A7%D8%A8%D8%AA%D9%83%D8%A7%D8%B1",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: رأس المال المعرفي وقيمة الابتكار في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 22,
+        level: "mid",
+        title: "اقتصاد المنصات وإشكالية الاحتكار الرقمي",
+        paragraph: "من منظور إبستيمي-تداولي، يمكن الدفاع عن أطروحة مفادها أن «اقتصاد المنصات وإشكالية الاحتكار الرقمي» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A7%D8%AA%20%D9%88%D8%A5%D8%B4%D9%83%D8%A7%D9%84%D9%8A%D8%A9%20%D8%A7%D9%84%D8%A7%D8%AD%D8%AA%D9%83%D8%A7%D8%B1%20%D8%A7%D9%84%D8%B1%D9%82%D9%85%D9%8A",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: اقتصاد المنصات وإشكالية الاحتكار الرقمي في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 23,
+        level: "mid",
+        title: "الذكاء الاصطناعي وإعادة تشكيل سوق العمل",
+        paragraph: "تكشف المقارنة بين الأطر النظرية أن «الذكاء الاصطناعي وإعادة تشكيل سوق العمل» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A%20%D9%88%D8%A5%D8%B9%D8%A7%D8%AF%D8%A9%20%D8%AA%D8%B4%D9%83%D9%8A%D9%84%20%D8%B3%D9%88%D9%82%20%D8%A7%D9%84%D8%B9%D9%85%D9%84",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: الذكاء الاصطناعي وإعادة تشكيل سوق العمل في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 24,
+        level: "mid",
+        title: "سيادة البيانات واللامساواة الخوارزمية",
+        paragraph: "لا يستقيم النظر في هذا المحور إلا بالقول إن «سيادة البيانات واللامساواة الخوارزمية» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%B3%D9%8A%D8%A7%D8%AF%D8%A9%20%D8%A7%D9%84%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA%20%D9%88%D8%A7%D9%84%D9%84%D8%A7%D9%85%D8%B3%D8%A7%D9%88%D8%A7%D8%A9%20%D8%A7%D9%84%D8%AE%D9%88%D8%A7%D8%B1%D8%B2%D9%85%D9%8A%D8%A9",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: سيادة البيانات واللامساواة الخوارزمية في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 25,
+        level: "mid",
+        title: "العمل اللامادي ومعايير الإنتاجية الجديدة",
+        paragraph: "تدلّ المؤشرات الخطابية والمؤسسية على أن «العمل اللامادي ومعايير الإنتاجية الجديدة» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%B9%D9%85%D9%84%20%D8%A7%D9%84%D9%84%D8%A7%D9%85%D8%A7%D8%AF%D9%8A%20%D9%88%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1%20%D8%A7%D9%84%D8%A5%D9%86%D8%AA%D8%A7%D8%AC%D9%8A%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: العمل اللامادي ومعايير الإنتاجية الجديدة في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 26,
+        level: "mid",
+        title: "التعليم المرن في اقتصاد المهارات المتغيرة",
+        paragraph: "عند فحص البنية الحجاجية للموضوع، يتأكد أن «التعليم المرن في اقتصاد المهارات المتغيرة» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85%20%D8%A7%D9%84%D9%85%D8%B1%D9%86%20%D9%81%D9%8A%20%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%20%D8%A7%D9%84%D9%85%D9%87%D8%A7%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%AA%D8%BA%D9%8A%D8%B1%D8%A9",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: التعليم المرن في اقتصاد المهارات المتغيرة في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 27,
+        level: "mid",
+        title: "الفجوة التقنية بين المركز والأطراف",
+        paragraph: "ضمن سياق عالمي متحوّل، يبرز أن «الفجوة التقنية بين المركز والأطراف» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%81%D8%AC%D9%88%D8%A9%20%D8%A7%D9%84%D8%AA%D9%82%D9%86%D9%8A%D8%A9%20%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%B2%20%D9%88%D8%A7%D9%84%D8%A3%D8%B7%D8%B1%D8%A7%D9%81",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: الفجوة التقنية بين المركز والأطراف في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 28,
+        level: "mid",
+        title: "التمويل الرقمي والتحول في الثقة المؤسسية",
+        paragraph: "تضعنا هذه القضية أمام سؤال تأسيسي يقول إن «التمويل الرقمي والتحول في الثقة المؤسسية» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%AA%D9%85%D9%88%D9%8A%D9%84%20%D8%A7%D9%84%D8%B1%D9%82%D9%85%D9%8A%20%D9%88%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%AB%D9%82%D8%A9%20%D8%A7%D9%84%D9%85%D8%A4%D8%B3%D8%B3%D9%8A%D8%A9",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: التمويل الرقمي والتحول في الثقة المؤسسية في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 29,
+        level: "mid",
+        title: "أخلاقيات الأتمتة وحقوق العامل المعرفي",
+        paragraph: "من زاوية فلسفة الفعل الاجتماعي، يتضح أن «أخلاقيات الأتمتة وحقوق العامل المعرفي» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D8%A3%D8%AE%D9%84%D8%A7%D9%82%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A3%D8%AA%D9%85%D8%AA%D8%A9%20%D9%88%D8%AD%D9%82%D9%88%D9%82%20%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D9%84%20%D8%A7%D9%84%D9%85%D8%B9%D8%B1%D9%81%D9%8A",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: أخلاقيات الأتمتة وحقوق العامل المعرفي في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 30,
+        level: "mid",
+        title: "منطق الخوارزمية وحدود القرار البشري",
+        paragraph: "تبيّن القراءة التركيبية لهذا الملف أن «منطق الخوارزمية وحدود القرار البشري» يوفّر إطارًا تحليليًا مناسبًا لبناء كفايات القراءة العليا لدى طلاب المستوى المتوسط المتقدم، إذ يدفعهم إلى تجاوز الفهم المباشر نحو تفسير الشبكات الدلالية التي تربط المفهوم بسياقه التاريخي والاجتماعي. في هذا المستوى، يصبح التعلم فعلَ تأويلٍ منظم: تحديد الأطروحة المركزية، تفكيك الحجج المساندة، وتقدير وزن القرائن في بناء الاستنتاج. كما يتطلب الموضوع قدرة على المقارنة الدقيقة بين نماذج تفسيرية متعددة، وإدراك الفروق بين المعنى المعجمي والمعنى التداولي الذي تُنتجه مؤسسات الخطاب وأنماط التلقي. لذلك يُنتظر من الطالب أن يكتب خلاصةً تركيبية لا تعيد الصياغة فقط، بل تعيد ترتيب العلاقات المنطقية بين الأسباب والنتائج، وتبرهن على وعيه بحدود الفكرة وإمكانات تطويرها. بهذه الطريقة، تتعزز المهارة اللغوية بوصفها أداة تفكير منهجي وليست مجرد وعاء للمعلومات.",
+        video: "https://www.youtube.com/results?search_query=%D9%85%D9%86%D8%B7%D9%82%20%D8%A7%D9%84%D8%AE%D9%88%D8%A7%D8%B1%D8%B2%D9%85%D9%8A%D8%A9%20%D9%88%D8%AD%D8%AF%D9%88%D8%AF%20%D8%A7%D9%84%D9%82%D8%B1%D8%A7%D8%B1%20%D8%A7%D9%84%D8%A8%D8%B4%D8%B1%D9%8A",
+        source: "https://www.worldbank.org/ar/home",
+        sourceTitle: "المصدر العربي: البنك الدولي (اقتصاد المعرفة)",
+        quiz: {
+          question: "أي قراءة تحليلية أدق لفهم: منطق الخوارزمية وحدود القرار البشري في سياق عالمي مركب؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "القراءة الأدق تربط المفهوم بسياقه وتوازن بين الدليل والاستنتاج."
+        }
+      },
+      {
+        id: 31,
+        level: "high",
+        title: "العدالة المناخية بين المسؤولية التاريخية والإنصاف",
+        paragraph: "في مستوى التحليل النقدي المعمّق، يظهر أن «العدالة المناخية بين المسؤولية التاريخية والإنصاف» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%B9%D8%AF%D8%A7%D9%84%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%AE%D9%8A%D8%A9%20%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D9%85%D8%B3%D8%A4%D9%88%D9%84%D9%8A%D8%A9%20%D8%A7%D9%84%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D8%A5%D9%86%D8%B5%D8%A7%D9%81",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: العدالة المناخية بين المسؤولية التاريخية والإنصاف ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 32,
+        level: "high",
+        title: "الانتقال الطاقي وتكلفة التحول البنيوي",
+        paragraph: "من منظور إبستيمي-تداولي، يمكن الدفاع عن أطروحة مفادها أن «الانتقال الطاقي وتكلفة التحول البنيوي» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84%20%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D9%8A%20%D9%88%D8%AA%D9%83%D9%84%D9%81%D8%A9%20%D8%A7%D9%84%D8%AA%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%A8%D9%86%D9%8A%D9%88%D9%8A",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الانتقال الطاقي وتكلفة التحول البنيوي ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 33,
+        level: "high",
+        title: "ندرة المياه وإدارة المخاطر العابرة للحدود",
+        paragraph: "تكشف المقارنة بين الأطر النظرية أن «ندرة المياه وإدارة المخاطر العابرة للحدود» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D9%86%D8%AF%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87%20%D9%88%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%AE%D8%A7%D8%B7%D8%B1%20%D8%A7%D9%84%D8%B9%D8%A7%D8%A8%D8%B1%D8%A9%20%D9%84%D9%84%D8%AD%D8%AF%D9%88%D8%AF",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: ندرة المياه وإدارة المخاطر العابرة للحدود ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 34,
+        level: "high",
+        title: "التنوع الحيوي كشرط للاستقرار الحضاري",
+        paragraph: "لا يستقيم النظر في هذا المحور إلا بالقول إن «التنوع الحيوي كشرط للاستقرار الحضاري» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%AA%D9%86%D9%88%D8%B9%20%D8%A7%D9%84%D8%AD%D9%8A%D9%88%D9%8A%20%D9%83%D8%B4%D8%B1%D8%B7%20%D9%84%D9%84%D8%A7%D8%B3%D8%AA%D9%82%D8%B1%D8%A7%D8%B1%20%D8%A7%D9%84%D8%AD%D8%B6%D8%A7%D8%B1%D9%8A",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: التنوع الحيوي كشرط للاستقرار الحضاري ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 35,
+        level: "high",
+        title: "الأمن الصحي في عصر المخاطر البيئية",
+        paragraph: "تدلّ المؤشرات الخطابية والمؤسسية على أن «الأمن الصحي في عصر المخاطر البيئية» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%A3%D9%85%D9%86%20%D8%A7%D9%84%D8%B5%D8%AD%D9%8A%20%D9%81%D9%8A%20%D8%B9%D8%B5%D8%B1%20%D8%A7%D9%84%D9%85%D8%AE%D8%A7%D8%B7%D8%B1%20%D8%A7%D9%84%D8%A8%D9%8A%D8%A6%D9%8A%D8%A9",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الأمن الصحي في عصر المخاطر البيئية ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 36,
+        level: "high",
+        title: "المدن المستدامة ومفارقات التخطيط الحضري",
+        paragraph: "عند فحص البنية الحجاجية للموضوع، يتأكد أن «المدن المستدامة ومفارقات التخطيط الحضري» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%85%D8%AF%D9%86%20%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D8%AF%D8%A7%D9%85%D8%A9%20%D9%88%D9%85%D9%81%D8%A7%D8%B1%D9%82%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AA%D8%AE%D8%B7%D9%8A%D8%B7%20%D8%A7%D9%84%D8%AD%D8%B6%D8%B1%D9%8A",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: المدن المستدامة ومفارقات التخطيط الحضري ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 37,
+        level: "high",
+        title: "الاستهلاك الأخلاقي وسلوك الفاعل الفردي",
+        paragraph: "ضمن سياق عالمي متحوّل، يبرز أن «الاستهلاك الأخلاقي وسلوك الفاعل الفردي» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%87%D9%84%D8%A7%D9%83%20%D8%A7%D9%84%D8%A3%D8%AE%D9%84%D8%A7%D9%82%D9%8A%20%D9%88%D8%B3%D9%84%D9%88%D9%83%20%D8%A7%D9%84%D9%81%D8%A7%D8%B9%D9%84%20%D8%A7%D9%84%D9%81%D8%B1%D8%AF%D9%8A",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الاستهلاك الأخلاقي وسلوك الفاعل الفردي ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 38,
+        level: "high",
+        title: "الحوكمة البيئية وتنازع المصالح الدولية",
+        paragraph: "تضعنا هذه القضية أمام سؤال تأسيسي يقول إن «الحوكمة البيئية وتنازع المصالح الدولية» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%AD%D9%88%D9%83%D9%85%D8%A9%20%D8%A7%D9%84%D8%A8%D9%8A%D8%A6%D9%8A%D8%A9%20%D9%88%D8%AA%D9%86%D8%A7%D8%B2%D8%B9%20%D8%A7%D9%84%D9%85%D8%B5%D8%A7%D9%84%D8%AD%20%D8%A7%D9%84%D8%AF%D9%88%D9%84%D9%8A%D8%A9",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الحوكمة البيئية وتنازع المصالح الدولية ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 39,
+        level: "high",
+        title: "أخلاقيات الهندسة الجيولوجية للمناخ",
+        paragraph: "من زاوية فلسفة الفعل الاجتماعي، يتضح أن «أخلاقيات الهندسة الجيولوجية للمناخ» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A3%D8%AE%D9%84%D8%A7%D9%82%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D9%87%D9%86%D8%AF%D8%B3%D8%A9%20%D8%A7%D9%84%D8%AC%D9%8A%D9%88%D9%84%D9%88%D8%AC%D9%8A%D8%A9%20%D9%84%D9%84%D9%85%D9%86%D8%A7%D8%AE",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: أخلاقيات الهندسة الجيولوجية للمناخ ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 40,
+        level: "high",
+        title: "العلاقة بين النمو الاقتصادي وحدود الكوكب",
+        paragraph: "تبيّن القراءة التركيبية لهذا الملف أن «العلاقة بين النمو الاقتصادي وحدود الكوكب» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D9%82%D8%A9%20%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D9%86%D9%85%D9%88%20%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A%20%D9%88%D8%AD%D8%AF%D9%88%D8%AF%20%D8%A7%D9%84%D9%83%D9%88%D9%83%D8%A8",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: العلاقة بين النمو الاقتصادي وحدود الكوكب ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 41,
+        level: "high",
+        title: "الهوية الافتراضية وتحوّل تمثيل الذات",
+        paragraph: "في مستوى التحليل النقدي المعمّق، يظهر أن «الهوية الافتراضية وتحوّل تمثيل الذات» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%87%D9%88%D9%8A%D8%A9%20%D8%A7%D9%84%D8%A7%D9%81%D8%AA%D8%B1%D8%A7%D8%B6%D9%8A%D8%A9%20%D9%88%D8%AA%D8%AD%D9%88%D9%91%D9%84%20%D8%AA%D9%85%D8%AB%D9%8A%D9%84%20%D8%A7%D9%84%D8%B0%D8%A7%D8%AA",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الهوية الافتراضية وتحوّل تمثيل الذات ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 42,
+        level: "high",
+        title: "سياسات الذاكرة الرقمية وحق النسيان",
+        paragraph: "من منظور إبستيمي-تداولي، يمكن الدفاع عن أطروحة مفادها أن «سياسات الذاكرة الرقمية وحق النسيان» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%B3%D9%8A%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B0%D8%A7%D9%83%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B1%D9%82%D9%85%D9%8A%D8%A9%20%D9%88%D8%AD%D9%82%20%D8%A7%D9%84%D9%86%D8%B3%D9%8A%D8%A7%D9%86",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: سياسات الذاكرة الرقمية وحق النسيان ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 43,
+        level: "high",
+        title: "الرأي العام في عصر المنصات العابرة",
+        paragraph: "تكشف المقارنة بين الأطر النظرية أن «الرأي العام في عصر المنصات العابرة» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%B1%D8%A3%D9%8A%20%D8%A7%D9%84%D8%B9%D8%A7%D9%85%20%D9%81%D9%8A%20%D8%B9%D8%B5%D8%B1%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D8%A7%D8%A8%D8%B1%D8%A9",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الرأي العام في عصر المنصات العابرة ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 44,
+        level: "high",
+        title: "اللغة والسلطة في الفضاء الشبكي العالمي",
+        paragraph: "لا يستقيم النظر في هذا المحور إلا بالقول إن «اللغة والسلطة في الفضاء الشبكي العالمي» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%84%D8%BA%D8%A9%20%D9%88%D8%A7%D9%84%D8%B3%D9%84%D8%B7%D8%A9%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%81%D8%B6%D8%A7%D8%A1%20%D8%A7%D9%84%D8%B4%D8%A8%D9%83%D9%8A%20%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%D9%8A",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: اللغة والسلطة في الفضاء الشبكي العالمي ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 45,
+        level: "high",
+        title: "السرديات المتنافسة في الإعلام الكوني",
+        paragraph: "تدلّ المؤشرات الخطابية والمؤسسية على أن «السرديات المتنافسة في الإعلام الكوني» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%B3%D8%B1%D8%AF%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%AA%D9%86%D8%A7%D9%81%D8%B3%D8%A9%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A5%D8%B9%D9%84%D8%A7%D9%85%20%D8%A7%D9%84%D9%83%D9%88%D9%86%D9%8A",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: السرديات المتنافسة في الإعلام الكوني ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 46,
+        level: "high",
+        title: "الثقافة الهجينة وإعادة إنتاج الانتماء",
+        paragraph: "عند فحص البنية الحجاجية للموضوع، يتأكد أن «الثقافة الهجينة وإعادة إنتاج الانتماء» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%AB%D9%82%D8%A7%D9%81%D8%A9%20%D8%A7%D9%84%D9%87%D8%AC%D9%8A%D9%86%D8%A9%20%D9%88%D8%A5%D8%B9%D8%A7%D8%AF%D8%A9%20%D8%A5%D9%86%D8%AA%D8%A7%D8%AC%20%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D9%85%D8%A7%D8%A1",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الثقافة الهجينة وإعادة إنتاج الانتماء ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 47,
+        level: "high",
+        title: "اقتصاد الانتباه وأثره على الوعي الجمعي",
+        paragraph: "ضمن سياق عالمي متحوّل، يبرز أن «اقتصاد الانتباه وأثره على الوعي الجمعي» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%20%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%A8%D8%A7%D9%87%20%D9%88%D8%A3%D8%AB%D8%B1%D9%87%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D9%88%D8%B9%D9%8A%20%D8%A7%D9%84%D8%AC%D9%85%D8%B9%D9%8A",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: اقتصاد الانتباه وأثره على الوعي الجمعي ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 48,
+        level: "high",
+        title: "المواطنة الرقمية وحدود المسؤولية المدنية",
+        paragraph: "تضعنا هذه القضية أمام سؤال تأسيسي يقول إن «المواطنة الرقمية وحدود المسؤولية المدنية» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%B7%D9%86%D8%A9%20%D8%A7%D9%84%D8%B1%D9%82%D9%85%D9%8A%D8%A9%20%D9%88%D8%AD%D8%AF%D9%88%D8%AF%20%D8%A7%D9%84%D9%85%D8%B3%D8%A4%D9%88%D9%84%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%D8%A9",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: المواطنة الرقمية وحدود المسؤولية المدنية ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 49,
+        level: "high",
+        title: "التضليل المعلوماتي وأزمة الثقة العامة",
+        paragraph: "من زاوية فلسفة الفعل الاجتماعي، يتضح أن «التضليل المعلوماتي وأزمة الثقة العامة» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%AA%D8%B6%D9%84%D9%8A%D9%84%20%D8%A7%D9%84%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%D9%8A%20%D9%88%D8%A3%D8%B2%D9%85%D8%A9%20%D8%A7%D9%84%D8%AB%D9%82%D8%A9%20%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: التضليل المعلوماتي وأزمة الثقة العامة ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 50,
+        level: "high",
+        title: "المستقبل الإنساني بين التقنية والقيم",
+        paragraph: "تبيّن القراءة التركيبية لهذا الملف أن «المستقبل الإنساني بين التقنية والقيم» يتجاوز حدود العرض التقريري إلى مساءلة البنى العميقة التي تنظّم إنتاج المعنى داخل الحقول السياسية والاقتصادية والثقافية. فالمطلوب من المتعلم المتقدم ليس توصيف الظاهرة، بل تحليل شروط إمكانها: ما الفرضيات الضمنية التي تمنح خطابًا ما سلطةَ التمثيل؟ وكيف تُعاد صياغة المفاهيم عندما تنتقل بين السياقات المؤسسية والإعلامية والأكاديمية؟ من هنا، تتأسس القراءة على تفكيك علاقة اللغة بالسلطة، وتتبع آليات الشرعنة والإقصاء، وبناء أطروحة مركبة تجمع بين الدليل المقارن والبرهنة المفهومية. كما يقتضي هذا المستوى اختبار صلاحية الاستنتاجات أمام اعتراضات ممكنة، وتقدير حدود التعميم، والتمييز بين الارتباط السببي والمصاحبة الظرفية. بهذه المنهجية، يتحول النص إلى مختبر للفكر النقدي القادر على إدارة التعقيد، وصياغة موقف معرفي منضبط يتفاعل مع التعدد التأويلي دون السقوط في الاختزال.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84%20%D8%A7%D9%84%D8%A5%D9%86%D8%B3%D8%A7%D9%86%D9%8A%20%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D8%AA%D9%82%D9%86%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D9%82%D9%8A%D9%85",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: المستقبل الإنساني بين التقنية والقيم ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 51,
+        level: "high",
+        title: "الاقتصاد السياسي للانتقال المناخي العادل",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «الاقتصاد السياسي للانتقال المناخي العادل» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%20%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%B3%D9%8A%20%D9%84%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84%20%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%AE%D9%8A%20%D8%A7%D9%84%D8%B9%D8%A7%D8%AF%D9%84",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الاقتصاد السياسي للانتقال المناخي العادل ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 52,
+        level: "high",
+        title: "أمن المحيطات والحوكمة البيئية العابرة",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «أمن المحيطات والحوكمة البيئية العابرة» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D8%A3%D9%85%D9%86%20%D8%A7%D9%84%D9%85%D8%AD%D9%8A%D8%B7%D8%A7%D8%AA%20%D9%88%D8%A7%D9%84%D8%AD%D9%88%D9%83%D9%85%D8%A9%20%D8%A7%D9%84%D8%A8%D9%8A%D8%A6%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B9%D8%A7%D8%A8%D8%B1%D8%A9",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: أمن المحيطات والحوكمة البيئية العابرة ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 53,
+        level: "high",
+        title: "أخلاقيات الذكاء المناخي وصناعة القرار",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «أخلاقيات الذكاء المناخي وصناعة القرار» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D8%A3%D8%AE%D9%84%D8%A7%D9%82%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%AE%D9%8A%20%D9%88%D8%B5%D9%86%D8%A7%D8%B9%D8%A9%20%D8%A7%D9%84%D9%82%D8%B1%D8%A7%D8%B1",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: أخلاقيات الذكاء المناخي وصناعة القرار ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 54,
+        level: "high",
+        title: "سياسات التكيّف الحضري في مواجهة المخاطر المركبة",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «سياسات التكيّف الحضري في مواجهة المخاطر المركبة» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D8%B3%D9%8A%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AA%D9%83%D9%8A%D9%91%D9%81%20%D8%A7%D9%84%D8%AD%D8%B6%D8%B1%D9%8A%20%D9%81%D9%8A%20%D9%85%D9%88%D8%A7%D8%AC%D9%87%D8%A9%20%D8%A7%D9%84%D9%85%D8%AE%D8%A7%D8%B7%D8%B1%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: سياسات التكيّف الحضري في مواجهة المخاطر المركبة ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 55,
+        level: "high",
+        title: "الاستعمار البيئي وإشكاليات العدالة العالمية",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «الاستعمار البيئي وإشكاليات العدالة العالمية» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D8%B9%D9%85%D8%A7%D8%B1%20%D8%A7%D9%84%D8%A8%D9%8A%D8%A6%D9%8A%20%D9%88%D8%A5%D8%B4%D9%83%D8%A7%D9%84%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D8%AF%D8%A7%D9%84%D8%A9%20%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%D9%8A%D8%A9",
+        source: "https://www.unep.org/ar",
+        sourceTitle: "المصدر العربي: برنامج الأمم المتحدة للبيئة",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الاستعمار البيئي وإشكاليات العدالة العالمية ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 56,
+        level: "high",
+        title: "الحوكمة الخوارزمية والحق في التفسير",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «الحوكمة الخوارزمية والحق في التفسير» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%AD%D9%88%D9%83%D9%85%D8%A9%20%D8%A7%D9%84%D8%AE%D9%88%D8%A7%D8%B1%D8%B2%D9%85%D9%8A%D8%A9%20%D9%88%D8%A7%D9%84%D8%AD%D9%82%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%AA%D9%81%D8%B3%D9%8A%D8%B1",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الحوكمة الخوارزمية والحق في التفسير ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 57,
+        level: "high",
+        title: "سيادة المنصات وتحولات المجال العام",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «سيادة المنصات وتحولات المجال العام» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D8%B3%D9%8A%D8%A7%D8%AF%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A7%D8%AA%20%D9%88%D8%AA%D8%AD%D9%88%D9%84%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%AC%D8%A7%D9%84%20%D8%A7%D9%84%D8%B9%D8%A7%D9%85",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: سيادة المنصات وتحولات المجال العام ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 58,
+        level: "high",
+        title: "الأمن السيبراني المدني وأخلاقيات المراقبة",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «الأمن السيبراني المدني وأخلاقيات المراقبة» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D8%A3%D9%85%D9%86%20%D8%A7%D9%84%D8%B3%D9%8A%D8%A8%D8%B1%D8%A7%D9%86%D9%8A%20%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%20%D9%88%D8%A3%D8%AE%D9%84%D8%A7%D9%82%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D9%82%D8%A8%D8%A9",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الأمن السيبراني المدني وأخلاقيات المراقبة ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 59,
+        level: "high",
+        title: "الوكالة البشرية في عصر الذكاء التوليدي",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «الوكالة البشرية في عصر الذكاء التوليدي» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D8%A7%D9%84%D9%88%D9%83%D8%A7%D9%84%D8%A9%20%D8%A7%D9%84%D8%A8%D8%B4%D8%B1%D9%8A%D8%A9%20%D9%81%D9%8A%20%D8%B9%D8%B5%D8%B1%20%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%AA%D9%88%D9%84%D9%8A%D8%AF%D9%8A",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: الوكالة البشرية في عصر الذكاء التوليدي ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      },
+      {
+        id: 60,
+        level: "high",
+        title: "مستقبل الديمقراطية تحت ضغط التضليل الشبكي",
+        paragraph: "ضمن السياق الكوني المتسارع، يفرض موضوع «مستقبل الديمقراطية تحت ضغط التضليل الشبكي» مقاربةً تتجاوز التفسير الخطي للأحداث نحو تحليلٍ بنيوي يدمج الاقتصاد السياسي بالأخلاق التطبيقية ونظريات الحوكمة. وتتمثل القيمة المعرفية لهذا المحور في كشفه لآليات إنتاج القرار داخل بيئات عالية التعقيد حيث تتداخل المصالح السيادية مع الالتزامات المعيارية، وتتنازع المؤسسات على تعريف الصالح العام. لذلك يتطلب هذا المستوى من المتعلم بناء أطروحة نقدية تُمحّص الفرضيات الضمنية، وتفكك لغة الشرعنة، وتختبر قوة الدليل المقارن عبر حالات متعددة. كما يقتضي التمييز بين المؤشرات الوصفية والمؤشرات التفسيرية، وبين الارتباط الإحصائي والدلالة السببية، بما يمنع الانزلاق إلى تعميمات انطباعية. بهذه الكفاية، تتحول اللغة من أداة عرض إلى أداة استدلال معرفي قادر على إدارة التوتر بين الفاعلية التقنية والمسؤولية الإنسانية.",
+        video: "https://www.youtube.com/results?search_query=%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84%20%D8%A7%D9%84%D8%AF%D9%8A%D9%85%D9%82%D8%B1%D8%A7%D8%B7%D9%8A%D8%A9%20%D8%AA%D8%AD%D8%AA%20%D8%B6%D8%BA%D8%B7%20%D8%A7%D9%84%D8%AA%D8%B6%D9%84%D9%8A%D9%84%20%D8%A7%D9%84%D8%B4%D8%A8%D9%83%D9%8A",
+        source: "https://www.itu.int/ar/Pages/default.aspx",
+        sourceTitle: "المصدر العربي: الاتحاد الدولي للاتصالات",
+        quiz: {
+          question: "ما الأطروحة الأكثر اتساقًا عند معالجة: مستقبل الديمقراطية تحت ضغط التضليل الشبكي ضمن إطار أكاديمي نقدي؟",
+          choices: ["وصف عام دون إطار مفاهيمي", "تحليل سياقي مدعوم بحجج مترابطة", "أحكام انطباعية غير مبرهنة", "تكرار التعريف بلا نقد"],
+          correct: 1,
+          explanation: "الاستجابة المتقدمة تبني أطروحة نقدية مدعومة بدليل مقارن وتفكيك للمفاهيم."
+        }
+      }
+    ];
+
+    const vocabularyByTopic = {
+      1: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      2: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      3: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      4: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      5: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      6: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      7: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      8: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      9: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      10: [
+        { ar: "إبستيميا", en: "theory of knowledge" },
+        { ar: "تداولية", en: "pragmatics of meaning" },
+        { ar: "حجاج", en: "argumentative reasoning" }
+      ],
+      11: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      12: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      13: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      14: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      15: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      16: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      17: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      18: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      19: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      20: [
+        { ar: "تعددية قطبية", en: "multipolarity" },
+        { ar: "ردع", en: "deterrence" },
+        { ar: "حوكمة", en: "governance" }
+      ],
+      21: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      22: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      23: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      24: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      25: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      26: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      27: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      28: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      29: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      30: [
+        { ar: "منصات رقمية", en: "digital platforms" },
+        { ar: "رأس مال معرفي", en: "knowledge capital" },
+        { ar: "أتمتة", en: "automation" }
+      ],
+      31: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      32: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      33: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      34: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      35: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      36: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      37: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      38: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      39: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      40: [
+        { ar: "عدالة مناخية", en: "climate justice" },
+        { ar: "تحول طاقي", en: "energy transition" },
+        { ar: "استدامة", en: "sustainability" }
+      ],
+      41: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      42: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      43: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      44: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      45: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      46: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      47: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      48: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      49: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      50: [
+        { ar: "هوية رقمية", en: "digital identity" },
+        { ar: "تضليل معلوماتي", en: "misinformation" },
+        { ar: "اقتصاد الانتباه", en: "attention economy" }
+      ],
+      51: [
+        { ar: "سياسات تكيّف", en: "adaptation policies" },
+        { ar: "عدالة انتقالية", en: "just transition justice" },
+        { ar: "حوكمة بيئية", en: "environmental governance" }
+      ],
+      52: [
+        { ar: "سياسات تكيّف", en: "adaptation policies" },
+        { ar: "عدالة انتقالية", en: "just transition justice" },
+        { ar: "حوكمة بيئية", en: "environmental governance" }
+      ],
+      53: [
+        { ar: "سياسات تكيّف", en: "adaptation policies" },
+        { ar: "عدالة انتقالية", en: "just transition justice" },
+        { ar: "حوكمة بيئية", en: "environmental governance" }
+      ],
+      54: [
+        { ar: "سياسات تكيّف", en: "adaptation policies" },
+        { ar: "عدالة انتقالية", en: "just transition justice" },
+        { ar: "حوكمة بيئية", en: "environmental governance" }
+      ],
+      55: [
+        { ar: "سياسات تكيّف", en: "adaptation policies" },
+        { ar: "عدالة انتقالية", en: "just transition justice" },
+        { ar: "حوكمة بيئية", en: "environmental governance" }
+      ],
+      56: [
+        { ar: "حوكمة خوارزمية", en: "algorithmic governance" },
+        { ar: "سيادة رقمية", en: "digital sovereignty" },
+        { ar: "تضليل شبكي", en: "networked disinformation" }
+      ],
+      57: [
+        { ar: "حوكمة خوارزمية", en: "algorithmic governance" },
+        { ar: "سيادة رقمية", en: "digital sovereignty" },
+        { ar: "تضليل شبكي", en: "networked disinformation" }
+      ],
+      58: [
+        { ar: "حوكمة خوارزمية", en: "algorithmic governance" },
+        { ar: "سيادة رقمية", en: "digital sovereignty" },
+        { ar: "تضليل شبكي", en: "networked disinformation" }
+      ],
+      59: [
+        { ar: "حوكمة خوارزمية", en: "algorithmic governance" },
+        { ar: "سيادة رقمية", en: "digital sovereignty" },
+        { ar: "تضليل شبكي", en: "networked disinformation" }
+      ],
+      60: [
+        { ar: "حوكمة خوارزمية", en: "algorithmic governance" },
+        { ar: "سيادة رقمية", en: "digital sovereignty" },
+        { ar: "تضليل شبكي", en: "networked disinformation" }
+      ]
+    };
+
+    const mainCategoryGroups = [
+      { label: "الفلسفة وأسئلة المعنى", ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
+      { label: "النظام الدولي والتحولات الجيوسياسية", ids: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20] },
+      { label: "الاقتصاد المعرفي والتقنية", ids: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30] },
+      { label: "البيئة والأخلاق الكوكبية", ids: [31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 51, 52, 53, 54, 55] },
+      { label: "الهوية الرقمية والثقافة العالمية", ids: [41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 56, 57, 58, 59, 60] }
+    ];
+
+    const state = {
+      filter: "all",
+      category: "all",
+      coverMode: true,
+      activeId: topics[0].id,
+      answered: new Set(),
+      correctFirstTry: new Set(),
+      checkedPerTopic: new Map()
+    };
+
+    const topicsList = document.getElementById("topicsList");
+    const topicTitle = document.getElementById("topicTitle");
+    const levelTag = document.getElementById("levelTag");
+    const topicParagraph = document.getElementById("topicParagraph");
+    const videoLink = document.getElementById("videoLink");
+    const sourceLink = document.getElementById("sourceLink");
+    const vocabList = document.getElementById("vocabList");
+    const quizQuestion = document.getElementById("quizQuestion");
+    const quizForm = document.getElementById("quizForm");
+    const resultBox = document.getElementById("resultBox");
+    const progressText = document.getElementById("progressText");
+    const progressFill = document.getElementById("progressFill");
+    const scoreText = document.getElementById("scoreText");
+    const topicsCount = document.getElementById("topicsCount");
+    const mainCategories = document.getElementById("mainCategories");
+    const heroDescription = document.getElementById("heroDescription");
+    const bookCover = document.getElementById("bookCover");
+    const bookCoverSecond = document.getElementById("bookCoverSecond");
+    const bookCoverThird = document.getElementById("bookCoverThird");
+    const bookCoverFourth = document.getElementById("bookCoverFourth");
+    const coverTitleMain = document.getElementById("coverTitleMain");
+    const coverTitleSecond = document.getElementById("coverTitleSecond");
+    const coverTitleThird = document.getElementById("coverTitleThird");
+    const coverTitleFourth = document.getElementById("coverTitleFourth");
+    const frontFooter = document.getElementById("frontFooter");
+    const schoolName = document.getElementById("schoolName");
+    const contentShell = document.getElementById("contentShell");
+    const coverNote = document.getElementById("coverNote");
+    const appHeader = document.getElementById("appHeader");
+    const topInfoTrack = document.getElementById("topInfoTrack");
+    const bottomInfoTrack = document.getElementById("bottomInfoTrack");
+    const movingBars = Array.from(document.querySelectorAll(".moving-bar"));
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const checkBtn = document.getElementById("checkBtn");
+    const filterButtons = Array.from(document.querySelectorAll(".filter-btn"));
+    const categoryPalettes = ["palette-1", "palette-2", "palette-3", "palette-4"];
+    const movingBarThemes = ["theme-1", "theme-2", "theme-3", "theme-4"];
+    const schoolNameColors = ["#ffd700", "#ffb300", "#ffea70", "#ffc14d", "#fff28a"];
+    const coverNoteColors = ["#f2f7ff", "#ffe9b5", "#d7f8ff", "#ffd6f1", "#e2ffd6"];
+    const coverTitleColorPalettes = [
+      ["#3b3f7d", "#1c4b40", "#66315f", "#4f2a29"],
+      ["#7a2f6b", "#1f5a76", "#35682e", "#9b4b1f"],
+      ["#274c8e", "#6e2f8f", "#1f7a69", "#8a2f45"],
+      ["#5b3d9c", "#2e6175", "#7a4f24", "#3f5c2a"]
+    ];
+    const heroDescriptionColors = ["#daf3ec", "#ffe7b8", "#d6f0ff", "#ffd6f2", "#e1ffd7"];
+    let paletteIndex = 0;
+    let movingBarThemeIndex = 0;
+    let schoolNameColorIndex = 0;
+    let coverNoteColorIndex = 0;
+    let coverTitleColorIndex = 0;
+    let heroDescriptionColorIndex = 0;
+
+    function levelLabel(value) {
+      if (value === "mid") return "متوسط-متقدم";
+      return "ثانوي-متقدم";
+    }
+
+    function filteredTopics() {
+      let pool = topics;
+      if (state.filter !== "all") {
+        pool = pool.filter((topic) => topic.level === state.filter);
+      }
+      if (state.category !== "all") {
+        const group = mainCategoryGroups.find((item) => item.label === state.category);
+        if (group) {
+          pool = pool.filter((topic) => group.ids.includes(topic.id));
+        }
+      }
+      return pool;
+    }
+
+    function currentTopic() {
+      const pool = filteredTopics();
+      const found = pool.find((topic) => topic.id === state.activeId);
+      return found || pool[0];
+    }
+
+    function renderTopicsList() {
+      const pool = filteredTopics();
+      if (!pool.length) return;
+
+      if (!pool.some((topic) => topic.id === state.activeId)) {
+        state.activeId = pool[0].id;
+      }
+
+      topicsList.innerHTML = pool.map((topic) => {
+        const active = topic.id === state.activeId ? "active" : "";
+        const done = state.answered.has(topic.id) ? "✓" : "•";
+        return `
+          <button class="topic-btn ${active}" data-id="${topic.id}">
+            ${done} ${topic.title}
+            <small>${levelLabel(topic.level)}</small>
+          </button>
+        `;
+      }).join("");
+
+      Array.from(document.querySelectorAll(".topic-btn")).forEach((button) => {
+        button.addEventListener("click", () => {
+          state.activeId = Number(button.dataset.id);
+          renderAll();
+        });
+      });
+    }
+
+    function renderQuiz(topic) {
+      quizQuestion.textContent = topic.quiz.question;
+      quizForm.innerHTML = topic.quiz.choices.map((choice, idx) => `
+        <label class="choice">
+          <input type="radio" name="quizChoice" value="${idx}" />
+          ${choice}
+        </label>
+      `).join("");
+
+      resultBox.className = "result";
+      resultBox.textContent = "";
+    }
+
+    function renderTopicContent() {
+      const topic = currentTopic();
+      if (!topic) return;
+
+      topicTitle.textContent = topic.title;
+      levelTag.textContent = levelLabel(topic.level);
+      topicParagraph.textContent = topic.paragraph;
+      videoLink.href = topic.video;
+      videoLink.textContent = `فيديو مقترح: ${topic.title}`;
+      sourceLink.href = topic.source;
+      sourceLink.textContent = topic.sourceTitle;
+      const vocabItems = vocabularyByTopic[topic.id] || [];
+      vocabList.innerHTML = vocabItems.map((item) => `
+        <li><strong>${item.ar}</strong>: ${item.en}</li>
+      `).join("");
+      renderQuiz(topic);
+    }
+
+    function updateProgress() {
+      const total = topics.length;
+      const done = state.answered.size;
+      const scoreTotal = state.correctFirstTry.size;
+      const answered = Math.max(done, 0);
+
+      progressText.textContent = `${done} / ${total}`;
+      progressFill.style.width = `${(done / total) * 100}%`;
+      scoreText.textContent = `النتيجة: ${scoreTotal} من ${answered}`;
+    }
+
+    function updateMovingBars() {
+      const total = topics.length;
+      const firstDomainCount = topics.filter((topic) => topic.id <= 10).length;
+      const midCount = topics.filter((topic) => topic.level === "mid").length;
+      const highCount = topics.filter((topic) => topic.level === "high").length;
+      const categoryInfo = mainCategoryGroups
+        .map((group) => `${group.label}: ${group.ids.length}`)
+        .join(" • ");
+      const info = `معلومات الموضوعات • الإجمالي: ${total} • الفلسفة والمعنى: ${firstDomainCount} • متوسط-متقدم: ${midCount} • ثانوي-متقدم: ${highCount} • ${categoryInfo} • `;
+      topInfoTrack.textContent = `${info}${info}${info}`;
+      bottomInfoTrack.textContent = `${info}${info}${info}`;
+    }
+
+    function renderMainCategories() {
+      mainCategories.classList.remove(...categoryPalettes);
+      mainCategories.classList.add(categoryPalettes[paletteIndex]);
+      const totalLabel = "كل الفئات";
+      const allChip = `<button class="cat-chip ${state.category === "all" ? "active" : ""}" data-category="${totalLabel}">${totalLabel}: ${topics.length}</button>`;
+      const chips = mainCategoryGroups.map((group) => {
+        const count = topics.filter((topic) => group.ids.includes(topic.id)).length;
+        const active = state.category === group.label ? "active" : "";
+        return `<button class="cat-chip ${active}" data-category="${group.label}">${group.label}: ${count}</button>`;
+      }).join("");
+
+      mainCategories.innerHTML = `${allChip}${chips}`;
+
+      Array.from(mainCategories.querySelectorAll(".cat-chip")).forEach((chip) => {
+        chip.addEventListener("click", () => {
+          const selected = chip.dataset.category;
+          state.category = selected === totalLabel ? "all" : selected;
+          state.filter = "all";
+          if (state.coverMode) {
+            state.coverMode = false;
+            contentShell.hidden = false;
+            coverNote.hidden = true;
+          }
+          const pool = filteredTopics();
+          if (pool.length) {
+            state.activeId = pool[0].id;
+          }
+          renderAll();
+          if (contentShell.hidden === false) {
+            contentShell.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+    }
+
+    function rotateCategoryPalette() {
+      paletteIndex = (paletteIndex + 1) % categoryPalettes.length;
+      renderMainCategories();
+    }
+
+    function rotateMovingBarTheme() {
+      movingBarThemeIndex = (movingBarThemeIndex + 1) % movingBarThemes.length;
+      movingBars.forEach((bar) => {
+        bar.classList.remove("theme-2", "theme-3", "theme-4");
+        const nextTheme = movingBarThemes[movingBarThemeIndex];
+        if (nextTheme !== "theme-1") {
+          bar.classList.add(nextTheme);
+        }
+      });
+    }
+
+    function rotateSchoolNameColor() {
+      schoolNameColorIndex = (schoolNameColorIndex + 1) % schoolNameColors.length;
+      schoolName.style.color = schoolNameColors[schoolNameColorIndex];
+    }
+
+    function rotateCoverNoteColor() {
+      coverNoteColorIndex = (coverNoteColorIndex + 1) % coverNoteColors.length;
+      coverNote.style.color = coverNoteColors[coverNoteColorIndex];
+    }
+
+    function rotateHeroDescriptionColor() {
+      heroDescriptionColorIndex = (heroDescriptionColorIndex + 1) % heroDescriptionColors.length;
+      heroDescription.style.color = heroDescriptionColors[heroDescriptionColorIndex];
+    }
+
+    function rotateCoverTitleColors() {
+      coverTitleColorIndex = (coverTitleColorIndex + 1) % coverTitleColorPalettes.length;
+      const palette = coverTitleColorPalettes[coverTitleColorIndex];
+      coverTitleFourth.style.color = palette[0];
+      coverTitleMain.style.color = palette[1];
+      coverTitleSecond.style.color = palette[2];
+      coverTitleThird.style.color = palette[3];
+    }
+
+    function renderAll() {
+      topicsCount.textContent = `عدد الموضوعات: ${topics.length}`;
+      bookCover.hidden = !state.coverMode;
+      bookCoverSecond.hidden = !state.coverMode;
+      bookCoverThird.hidden = !state.coverMode;
+      bookCoverFourth.hidden = !state.coverMode;
+      frontFooter.hidden = !state.coverMode;
+      contentShell.hidden = state.coverMode;
+      coverNote.hidden = !state.coverMode;
+      renderMainCategories();
+      updateMovingBars();
+      const pool = filteredTopics();
+      renderTopicsList();
+      if (!pool.length) {
+        topicTitle.textContent = "لا توجد موضوعات في هذا الاختيار";
+        levelTag.textContent = "-";
+        topicParagraph.textContent = "جرّب تغيير الفئة أو مستوى ACTFL لعرض موضوعات متاحة.";
+        videoLink.href = "#";
+        videoLink.textContent = "فيديو مقترح";
+        sourceLink.href = "#";
+        sourceLink.textContent = "المصدر العربي";
+        vocabList.innerHTML = "<li>لا توجد مفردات لهذا الاختيار الحالي.</li>";
+        quizQuestion.textContent = "لا يوجد سؤال متاح.";
+        quizForm.innerHTML = "";
+        resultBox.className = "result";
+        resultBox.textContent = "";
+      } else {
+        renderTopicContent();
+      }
+      updateProgress();
+      updateFilterButtons();
+    }
+
+    function updateFilterButtons() {
+      filterButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.filter === state.filter);
+      });
+    }
+
+    function checkAnswer() {
+      const topic = currentTopic();
+      const selected = quizForm.querySelector('input[name="quizChoice"]:checked');
+      if (!selected) {
+        resultBox.className = "result bad";
+        resultBox.textContent = "اختر إجابة أولًا ثم اضغط تحقق.";
+        return;
+      }
+
+      const selectedIndex = Number(selected.value);
+      const correct = selectedIndex === topic.quiz.correct;
+      const alreadyChecked = state.checkedPerTopic.has(topic.id);
+
+      state.answered.add(topic.id);
+
+      if (!alreadyChecked && correct) {
+        state.correctFirstTry.add(topic.id);
+      }
+
+      state.checkedPerTopic.set(topic.id, true);
+
+      if (correct) {
+        resultBox.className = "result ok";
+        resultBox.textContent = `إجابة صحيحة. ${topic.quiz.explanation}`;
+      } else {
+        const correctText = topic.quiz.choices[topic.quiz.correct];
+        resultBox.className = "result bad";
+        resultBox.textContent = `إجابة غير صحيحة. الإجابة الصحيحة: ${correctText}. ${topic.quiz.explanation}`;
+      }
+
+      updateProgress();
+      renderTopicsList();
+    }
+
+    function nextTopic() {
+      const pool = filteredTopics();
+      const idx = pool.findIndex((topic) => topic.id === state.activeId);
+      if (idx === -1) return;
+      const next = pool[(idx + 1) % pool.length];
+      state.activeId = next.id;
+      renderAll();
+    }
+
+    function prevTopic() {
+      const pool = filteredTopics();
+      const idx = pool.findIndex((topic) => topic.id === state.activeId);
+      if (idx === -1) return;
+      const prev = pool[(idx - 1 + pool.length) % pool.length];
+      state.activeId = prev.id;
+      renderAll();
+    }
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.filter = btn.dataset.filter;
+        renderAll();
+      });
+    });
+
+    checkBtn.addEventListener("click", checkAnswer);
+    nextBtn.addEventListener("click", nextTopic);
+    prevBtn.addEventListener("click", prevTopic);
+    appHeader.addEventListener("click", () => window.location.reload());
+    setInterval(rotateCategoryPalette, 120000);
+    setInterval(rotateMovingBarTheme, 5000);
+    setInterval(rotateSchoolNameColor, 5000);
+    setInterval(rotateCoverNoteColor, 5000);
+    setInterval(rotateCoverTitleColors, 5000);
+    setInterval(rotateHeroDescriptionColor, 5000);
+    renderAll();
+  </script>
+</body>
+</html>
